@@ -41,6 +41,19 @@ def genericize(content: str, version: str) -> str:
         "_add your deployed URL here once you've set up hosting_\n",
     )
 
+    # Drop the "use the template instead" callout and its matching Related
+    # Tools bullet — redundant once you're already inside a seeded fork
+    content = re.sub(
+        r"> \U0001F9EC \*\*Adapting this for your own study\?\*\*[^\n]*\n\n",
+        "",
+        content,
+    )
+    content = re.sub(
+        r"- \U0001F9EC \[\*\*SleepDiaries Protocol\*\*\][^\n]*\n",
+        "",
+        content,
+    )
+
     # Insert a banner right after the first heading, noting this README was
     # inherited from the source project and pointing to the setup checklist
     lines = content.split("\n")

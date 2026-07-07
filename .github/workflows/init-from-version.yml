@@ -6,7 +6,10 @@ name: Initialize SleepDiaries Protocol from version
 #
 # NOTE FOR MAINTAINERS (circadia-bio/SleepDiaries):
 # Add new stable tags to the "options" list below whenever a new version is
-# released, so adapters using this template can pick it up.
+# released, so adapters using this template can pick it up. Also update the
+# "Available versions" line in this repo's README.md to match — the two
+# lists are not derived from each other and will drift if only one is kept
+# current.
 
 on:
   workflow_dispatch:
