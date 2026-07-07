@@ -43,14 +43,14 @@ jobs:
 
       - name: Download chosen release source
         run: |
-          curl -L -o source.tar.gz \
+          curl -L -o /tmp/source.tar.gz \
             "https://github.com/circadia-bio/SleepDiaries/archive/refs/tags/${{ github.event.inputs.version }}.tar.gz"
-          mkdir source
-          tar -xzf source.tar.gz -C source --strip-components=1
+          mkdir /tmp/source
+          tar -xzf /tmp/source.tar.gz -C /tmp/source --strip-components=1
 
       - name: Strip lab-specific / study-specific files
         run: |
-          cd source
+          cd /tmp/source
           # Academic citation metadata tied to the original research project
           rm -f CITATION.cff
           # Fathom analytics + circadia-lab.uk domain references are injected
@@ -69,11 +69,11 @@ jobs:
       - name: Replace placeholder content with release source
         run: |
           find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
-          cp -r source/. .
+          cp -r /tmp/source/. .
           mkdir -p .github/workflows
           cp /tmp/keep/.github/workflows/init-from-version.yml .github/workflows/
           [ -f /tmp/keep/TEMPLATE_SETUP.md ] && cp /tmp/keep/TEMPLATE_SETUP.md . || true
-          rm -rf source source.tar.gz
+          rm -rf /tmp/source /tmp/source.tar.gz
 
       - name: Remove this workflow to prevent re-triggering
         run: rm -f .github/workflows/init-from-version.yml
