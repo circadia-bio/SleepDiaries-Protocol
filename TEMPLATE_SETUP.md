@@ -1,0 +1,43 @@
+# Setting up your SleepDiaries Protocol fork
+
+This repo was seeded from a tagged release of [SleepDiaries](https://github.com/circadia-bio/SleepDiaries). A few things were stripped out during initialization (analytics, citation metadata, the original deployment script) — here's what to do next to make this yours.
+
+## 1. Rename the app
+
+- `app.json` — update `name`, `slug`, `scheme`, and bundle identifiers (`ios.bundleIdentifier`, `android.package`)
+- `package.json` — update `name`
+- Search the codebase for remaining "Sleep Diaries" strings in UI copy (`i18n/en.js`, `i18n/pt-BR.js`) and swap for your study/app name
+
+## 2. Rebrand
+
+- `theme/typography.js` and related theme files — swap the colour palette and fonts, or keep the defaults if they suit your study
+- `assets/` — replace the app icon, splash screens, and social preview image (`social.png`)
+- `header.png`, `screens.png` — used in the README; replace or remove
+
+## 3. Reconfigure deployment
+
+The original `scripts/deploy.sh` (which handled PWA meta injection, Fathom analytics, and Netlify redirects) was removed since it pointed at the original lab's domain and analytics account. You'll need to:
+
+- Write your own build/deploy script, or adapt the [original](https://github.com/circadia-bio/SleepDiaries/blob/main/scripts/deploy.sh) for your own domain and hosting
+- Set up your own analytics if you want it (Fathom, Plausible, or none)
+- Update `web/manifest.json` with your own app name and icons
+
+## 4. Decide which questionnaires to keep
+
+SleepDiaries ships with 8 validated instruments: ESS, ISI, DBAS-16, MEQ, PSQI, RU-SATED, STOP-BANG, MCTQ. If your study doesn't need all of them, they're implemented independently in `app/questionnaire.jsx` and scored in `storage/storage.js` — check the [SleepDiaries README](https://github.com/circadia-bio/SleepDiaries) for how each one is wired in before removing.
+
+## 5. Citation
+
+The original `CITATION.cff` was removed since it credits the SleepDiaries research team specifically. If you publish work using this adapted app, please still credit the original project:
+
+> França, L.G.S. et al. SleepDiaries. https://github.com/circadia-bio/SleepDiaries
+
+Add your own `CITATION.cff` for your fork if appropriate.
+
+## 6. Clean up
+
+Once you've been through this checklist, delete this file. The `.github/workflows/init-from-version.yml` workflow no longer exists at this point — it removes itself after running — so you're free to add your own CI.
+
+---
+
+Questions about the underlying app structure? See the [SleepDiaries repo](https://github.com/circadia-bio/SleepDiaries) or open an issue there.
