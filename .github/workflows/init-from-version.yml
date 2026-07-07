@@ -41,6 +41,13 @@ jobs:
             exit 1
           fi
 
+      - name: Preserve template scaffolding before the swap
+        run: |
+          mkdir -p /tmp/keep/.github/workflows
+          cp .github/workflows/init-from-version.yml /tmp/keep/.github/workflows/
+          cp .github/scripts/genericize_readme.py /tmp/keep/
+          [ -f TEMPLATE_SETUP.md ] && cp TEMPLATE_SETUP.md /tmp/keep/ || true
+
       - name: Download chosen release source
         run: |
           curl -L -o /tmp/source.tar.gz \
@@ -65,11 +72,11 @@ jobs:
           rm -rf .github/workflows
           echo "Stripped lab-specific files."
 
-      - name: Preserve template scaffolding across the swap
+      - name: Genericize README for template use
         run: |
-          mkdir -p /tmp/keep/.github/workflows
-          cp .github/workflows/init-from-version.yml /tmp/keep/.github/workflows/
-          [ -f TEMPLATE_SETUP.md ] && cp TEMPLATE_SETUP.md /tmp/keep/ || true
+          python3 /tmp/keep/genericize_readme.py \
+            /tmp/source/README.md \
+            "${{ github.event.inputs.version }}"
 
       - name: Replace placeholder content with release source
         run: |
