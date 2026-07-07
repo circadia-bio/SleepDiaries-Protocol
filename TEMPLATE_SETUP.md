@@ -22,11 +22,15 @@ The original `scripts/deploy.sh` (which handled PWA meta injection, Fathom analy
 - Set up your own analytics if you want it (Fathom, Plausible, or none)
 - Update `web/manifest.json` with your own app name and icons
 
-## 4. Decide which questionnaires to keep
+## 4. Add your own CI (optional)
+
+The original repo's `.github/workflows/` (tests, deploy pipeline) were stripped out during seeding — partly because they're lab-specific, and partly because GitHub's default Actions token is never allowed to push changes under `.github/workflows/` on your behalf, so they couldn't have been carried over automatically anyway. If you want CI, add your own workflow files once you've set up the repo.
+
+## 5. Decide which questionnaires to keep
 
 SleepDiaries ships with 8 validated instruments: ESS, ISI, DBAS-16, MEQ, PSQI, RU-SATED, STOP-BANG, MCTQ. If your study doesn't need all of them, they're implemented independently in `app/questionnaire.jsx` and scored in `storage/storage.js` — check the [SleepDiaries README](https://github.com/circadia-bio/SleepDiaries) for how each one is wired in before removing.
 
-## 5. Citation
+## 6. Citation
 
 The original `CITATION.cff` was removed since it credits the SleepDiaries research team specifically. If you publish work using this adapted app, please still credit the original project:
 
@@ -34,7 +38,7 @@ The original `CITATION.cff` was removed since it credits the SleepDiaries resear
 
 Add your own `CITATION.cff` for your fork if appropriate.
 
-## 6. Clean up
+## 7. Clean up
 
 Once you've been through this checklist, delete this file. The `.github/workflows/init-from-version.yml` workflow no longer exists at this point — it removes itself after running — so you're free to add your own CI.
 

@@ -24,7 +24,6 @@ on:
 
 permissions:
   contents: write
-  workflows: write
 
 jobs:
   seed:
@@ -59,6 +58,11 @@ jobs:
           rm -f scripts/deploy.sh
           # Any Netlify config pointed at the original site
           rm -f netlify.toml
+          # CI workflows are lab-specific (test/deploy pipelines) and, more
+          # importantly, GITHUB_TOKEN can never push changes under
+          # .github/workflows/ — only a PAT with the 'workflow' scope can.
+          # Adapters should add their own CI once they've set up the fork.
+          rm -rf .github/workflows
           echo "Stripped lab-specific files."
 
       - name: Preserve template scaffolding across the swap
