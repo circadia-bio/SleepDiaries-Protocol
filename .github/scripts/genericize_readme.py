@@ -54,6 +54,27 @@ def genericize(content: str, version: str) -> str:
         content,
     )
 
+    # Replace the "Release workflow" section (Circadia Lab's own release-branch
+    # process, added in v1.2.0). It relies on the GitHub Action and deploy-script
+    # guard that are stripped during seeding, so it would describe things the
+    # fork doesn't have. Match up to the next heading or horizontal rule; if the
+    # section isn't present (older versions) or has no such terminator, nothing
+    # changes.
+    content = re.sub(
+        r"^### Release workflow\n.*?(?=^#{1,6} |^---$)",
+        (
+            "### Release workflow\n\n"
+            "_The original project deploys from a `release` branch using a GitHub "
+            "Action and a guarded deploy script. Those are specific to Circadia Lab "
+            "and were removed during seeding. See the "
+            "[SleepDiaries README]"
+            "(https://github.com/circadia-bio/SleepDiaries#release-workflow) "
+            "if you'd like to adopt the same pattern._\n\n"
+        ),
+        content,
+        flags=re.DOTALL | re.MULTILINE,
+    )
+
     # Insert a banner right after the first heading, noting this README was
     # inherited from the source project and pointing to the setup checklist
     lines = content.split("\n")

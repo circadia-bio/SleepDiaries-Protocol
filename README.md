@@ -37,13 +37,14 @@ Click **Use this template**, run one GitHub Action, and you get a ready-to-custo
 | `netlify.toml` | Deployment config tied to the original site |
 | `.github/workflows/*` (original CI) | Lab-specific test/deploy pipelines — also, GitHub's default token can never push workflow files on your behalf, so these couldn't be carried over automatically either way |
 | README badges (Tests, DOI, Last commit, Issues, PRs) | Reflect the original repo's live stats, not your fork's |
+| README "Release workflow" section | Describes Circadia Lab's own release-branch process, which relies on workflows and a deploy script that aren't carried over (replaced with a short pointer) |
 | Live `sleepdiaries.circadia-lab.uk` links | Won't resolve for a fresh fork |
 
 Everything else — the full app source, questionnaire engine, i18n, theming — comes across untouched. See `TEMPLATE_SETUP.md` after seeding for what still needs a manual decision (citation, authors, roadmap, related tools).
 
 ## 🧬 Available versions
 
-The seeding workflow currently offers: `v1.1.3`, `v1.1.2`, `v1.1.1`, `v1.1.0`. Check [SleepDiaries releases](https://github.com/circadia-bio/SleepDiaries/releases) for the latest — if a newer version isn't listed in the dropdown yet, let the maintainers know.
+The seeding workflow currently offers: `v1.2.0`, `v1.1.3`, `v1.1.2`, `v1.1.1`, `v1.1.0`. Check [SleepDiaries releases](https://github.com/circadia-bio/SleepDiaries/releases) for the latest — if a newer version isn't listed in the dropdown yet, let the maintainers know.
 
 ## 🤝 Related Tools
 
